@@ -2,7 +2,8 @@
     "name": "gabri/billig-kjop",
     "autoload": {
         "psr-4": {
-            "BilligKjop\\": "src/"
+            "BilligKjop\\": "src/",
+            "Config\\": "config/"
         }
     },
     "authors": [

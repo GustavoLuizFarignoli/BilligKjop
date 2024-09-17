@@ -1,4 +1,6 @@
 <?php
+    use Config\Conexao;
+    use BilligKjop\Controller\Error404Controller;
     require_once 'vendor/autoload.php';
     $routes = require_once 'config/routes.php';
     
@@ -14,9 +16,9 @@
             exit('Classe não encontrada!');
         }
         
-    } else {  
-        exit('Rota não encontrada!');
+    } else {
+        Error404Controller::index();
     }
     
-    /*$con = Conexao::getInstance();
+    /*
     echo "Index";*/

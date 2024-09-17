@@ -1,15 +1,23 @@
 <?php 
 namespace BilligKjop\Model;
-use BilligKjop\Conexao\Conexao;
+use Config\Conexao;
 
 abstract class Model
 { 
-    protected string $sql;
+    protected string $singleDataSql;
+    protected string $allDataSql;
 
-    public function getFromDb()
+    public function getByIdentifierFromDb()
     {
         $con = Conexao::getInstance();
-        $query_result = $con->getConexao()->query($this->sql);
+        $query_result = $con->getConexao()->query($this->singleDataSql);
         return $query_result->fetch(mode: \PDO::FETCH_ASSOC);
+    }
+
+    public function getAllFromDb(): array
+    {
+        $con = Conexao::getInstance();
+        $query_result = $con->getConexao()->query($this->allDataSql);
+        return $query_result->fetchAll(mode: \PDO::FETCH_ASSOC);
     }
 }

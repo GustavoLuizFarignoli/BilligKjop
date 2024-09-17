@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Config\\' => array($baseDir . '/config'),
     'BilligKjop\\' => array($baseDir . '/src'),
 );

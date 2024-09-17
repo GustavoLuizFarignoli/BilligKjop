@@ -1,10 +1,11 @@
-<?php namespace BilligKjop\Conexao;
+<?php
+namespace Config;
 
 class Conexao
 { 
     private static $instances = [];
     
-    private \PDO $conexao;
+    private static \PDO $conexao;
 
     protected function __construct() { }
 
@@ -19,13 +20,13 @@ class Conexao
         return self::$instances[$cls];
     }
 
-    public function getConexao() {
+    public function getConexao(): \PDO {
         return self::$conexao;
     }
 
-    public static function createConexao() {
+    public static function createConexao(): bool {
         $user = "gb";
-        $pass = "******";
+        $pass = "mysql@204";
         $dbname = "billigkjop";
         $dbip = "localhost";
         try {
