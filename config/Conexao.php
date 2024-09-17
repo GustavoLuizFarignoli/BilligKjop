@@ -1,4 +1,4 @@
-<?php 
+<?php namespace Billig\Conexao;
 
 class Conexao
 { 
@@ -13,26 +13,28 @@ class Conexao
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
             self::$instances[$cls] = new static();
+            self::$instances[$cls]::createConexao();
         }
 
         return self::$instances[$cls];
     }
 
     public function getConexao() {
-        return $this->conexao;
+        return self::$conexao;
     }
 
-    public function createConexao() {
+    public static function createConexao() {
         $user = "guga";
         $pass = "billig9";
         $dbname = "billigkjop";
         $dbip = "localhost";
         try {
-            return $this->conexao = new PDO("mysql:host=$dbip;dbname=$dbname", $user, $pass);
-        } catch (Exception $e) {
-            echo "Não foi possível conectar-se ao banco!";
+            self::$conexao = new \PDO("mysql:host=$dbip;dbname=$dbname", $user, $pass);
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
-        return null;
+        return false;
     }
 }
 

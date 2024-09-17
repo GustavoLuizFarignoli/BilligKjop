@@ -1,5 +1,5 @@
 <?php
-use Conexao;
+use Billig\Conexao\Conexao;
 abstract class Model
 { 
     protected string $sql;
@@ -7,7 +7,7 @@ abstract class Model
     public function getFromDb()
     {
         $con = Conexao::getInstance();
-        $query_result = $con->query($this->sql);
+        $query_result = $con->getConexao()->query($this->sql);
         return $query_result->fetch(\PDO::FETCH_ASSOC);
     }
 }

@@ -1,0 +1,15 @@
+{
+    "name": "gabri/billig-kjop",
+    "autoload": {
+        "psr-4": {
+            "BilligKjop\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gabrielmocellin",
+            "email": "gabriel.mocellin204@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,4 +1,7 @@
 <?php
-    /*return [
+
+use Billig\Controller\RegistroController;
+
+    return [
         "GET|/register"                     => RegistroController::class
-    ];*/
+    ];

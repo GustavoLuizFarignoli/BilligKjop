@@ -1,7 +1,8 @@
 <?php
-    require "config/Conexao.php";
-    $routes = require "config/routes.php";
-    require "Controller/Error404Controller.php";
+    require_once 'vendor/autoload.php';
+    $routes = require_once 'config/routes.php';
+    use Billig\Controller\{Error404Controller, RegistroController};
+    use Billig\Conexao;
     
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $serverMethod = $_SERVER['REQUEST_METHOD'];
@@ -10,11 +11,10 @@
     if (array_key_exists($key, $routes)) {
         $controllerClass = new $routes[$key]();
         $controllerClass::index();
-    } else {
-        Error404Controller::index();
+    } else {  
+        exit('Não deu boa');
     }
     
-    exit();
     /*$con = Conexao::getInstance();
     echo "Index";*/
 ?>
