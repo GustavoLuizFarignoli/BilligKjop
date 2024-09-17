@@ -1,11 +1,10 @@
 <?php
-namespace Billig\Controller;
+namespace BilligKjop\Controller;
 
-class RegistroController
+class RegistroController extends Controller
 { 
     public static function index()
     {
-        require "View/register_form.html";
+        require "View/create_product.html";
     }
 }
-?>

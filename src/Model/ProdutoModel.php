@@ -1,16 +1,10 @@
-<?php namespace Controller;
-
-use Model;
+<?php 
+namespace BilligKjop\Model;
+use BilligKjop\Model\Model;
 
 class ProdutoModel extends Model
 {
-    protected function __construct() {
-        $this->sql = "SELECT * FROM produto WHERE produto.id = 'id'";
-    }
-
-    public static function index()
-    {
-        
+    protected function __construct(int $id) {
+        $this->sql = "SELECT * FROM produtos WHERE produtos.id = $id";
     }
 }
-?>

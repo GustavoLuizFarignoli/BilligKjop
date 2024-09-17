@@ -1,10 +1,10 @@
-<?php namespace Billig\Conexao;
+<?php namespace BilligKjop\Conexao;
 
 class Conexao
 { 
     private static $instances = [];
     
-    private String $conexao;
+    private \PDO $conexao;
 
     protected function __construct() { }
 
@@ -24,17 +24,16 @@ class Conexao
     }
 
     public static function createConexao() {
-        $user = "guga";
-        $pass = "billig9";
+        $user = "gb";
+        $pass = "******";
         $dbname = "billigkjop";
         $dbip = "localhost";
         try {
-            self::$conexao = new \PDO("mysql:host=$dbip;dbname=$dbname", $user, $pass);
+            self::$conexao = new \PDO(dsn: "mysql:host=$dbip;dbname=$dbname", username: $user, password: $pass);
             return true;
         } catch (\Exception $e) {
             return false;
         }
-        return false;
     }
 }
 
@@ -52,4 +51,3 @@ class Conexao
 }
 
 TestCode();*/
-?>

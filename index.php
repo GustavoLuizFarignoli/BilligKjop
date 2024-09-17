@@ -1,20 +1,22 @@
 <?php
     require_once 'vendor/autoload.php';
     $routes = require_once 'config/routes.php';
-    use Billig\Controller\{Error404Controller, RegistroController};
-    use Billig\Conexao;
     
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $serverMethod = $_SERVER['REQUEST_METHOD'];
-    $key = "$serverMethod|$path";
+    $httpMethod = $_SERVER['REQUEST_METHOD'];
+    $key = "$httpMethod|$path";
 
     if (array_key_exists($key, $routes)) {
-        $controllerClass = new $routes[$key]();
-        $controllerClass::index();
+        if (class_exists($routes[$key])) {
+            $controllerClass = $routes[$key];
+            $controllerClass::index();
+        } else {
+            exit('Classe não encontrada!');
+        }
+        
     } else {  
-        exit('Não deu boa');
+        exit('Rota não encontrada!');
     }
     
     /*$con = Conexao::getInstance();
     echo "Index";*/
-?>

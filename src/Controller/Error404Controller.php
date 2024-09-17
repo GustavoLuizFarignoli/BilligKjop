@@ -1,7 +1,7 @@
 <?php
-namespace Billig\Controller;
+namespace BilligKjop\Controller;
 
-class Error404Controller
+class Error404Controller extends Controller
 {
     public static function index()
     {

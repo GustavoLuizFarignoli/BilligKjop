@@ -1,5 +1,7 @@
-<?php
-use Billig\Conexao\Conexao;
+<?php 
+namespace BilligKjop\Model;
+use BilligKjop\Conexao\Conexao;
+
 abstract class Model
 { 
     protected string $sql;
@@ -8,6 +10,6 @@ abstract class Model
     {
         $con = Conexao::getInstance();
         $query_result = $con->getConexao()->query($this->sql);
-        return $query_result->fetch(\PDO::FETCH_ASSOC);
+        return $query_result->fetch(mode: \PDO::FETCH_ASSOC);
     }
 }

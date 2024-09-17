@@ -1,7 +1,5 @@
 <?php
-
-use Billig\Controller\RegistroController;
-
     return [
-        "GET|/register"                     => RegistroController::class
+        "GET|/register" => BilligKjop\Controller\RegistroController::class,
+        "POST|/post/produto" => BilligKjop\Controller\SaveProdutoController::class,
     ];
