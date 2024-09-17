@@ -36,7 +36,7 @@ class Conexao
     }
 }
 
-function TestCode()
+/*function TestCode()
 {
     $s1 = Conexao::getInstance();
     $s2 = Conexao::getInstance();
@@ -49,5 +49,5 @@ function TestCode()
     }
 }
 
-TestCode();
+TestCode();*/
 ?>
