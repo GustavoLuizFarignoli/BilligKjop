@@ -7,10 +7,10 @@ use BilligKjop\Controller\Controller;
 
 class GetProdutoController extends Controller 
 { 
-    public static function index()
+    public static function index(): void
     {
         echo self::getData();
-        echo "<br><br><a href='/register'>Voltar</a>";
+        echo "<br><br><a href='/register'>Voltar</a><br><br>";
     }
 
     public static function getData()
@@ -25,13 +25,47 @@ class GetProdutoController extends Controller
             $productModel = new ProdutoModel(id: (int) $_GET['id']);
             $productData = $productModel->getByIdentifierFromDb();
 
-            if ($productData) return json_encode(value: ['response' => $productModel->getByIdentifierFromDb()]);
-            return json_encode(value:['response' => "Produto nao encontrado!"]);
+            if ($productData) return json_encode(
+                value: [
+                    "status" => 200,
+                    "headers" => [
+                        "Content-Type" => "application/json"
+                    ],
+                    "body" => [
+                        "message" => "Usuario encontrado.",
+                        "data" => $productData
+                    ]
+                ]
+            );
+
+            return json_encode(
+                value: [
+                    "status" => 404,
+                    "headers" => [
+                        "Content-Type" => "application/json"
+                    ],
+                    "body" => [
+                        "message" => "Usuario nao encontrado!",
+                        "data" => null
+                    ]
+                ]
+            );
         }
 
         $produtoModel = new ProdutoModel(-1);
         $productData = $produtoModel->getAllFromDb();
 
-        return json_encode(value: ['response' => $productData]);
+        return json_encode(
+            value: [
+                "status" => 200,
+                "headers" => [
+                    "Content-Type" => "application/json"
+                ],
+                "body" => [
+                    "message" => "Lista de usuarios encontrados",
+                    "data" => $productData
+                ]
+            ]
+        );
     }
 }

@@ -9,8 +9,8 @@ abstract class Model
 
     public function getByIdentifierFromDb()
     {
-        $con = Conexao::getInstance();
-        $query_result = $con->getConexao()->query($this->singleDataSql);
+        $con = Conexao::getInstance()->getConexao();
+        $query_result = $con->query($this->singleDataSql);
         return $query_result->fetch(mode: \PDO::FETCH_ASSOC);
     }
 

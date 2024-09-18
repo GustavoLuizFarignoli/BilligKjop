@@ -7,9 +7,9 @@ use BilligKjop\Controller\Controller;
 
 class PostProdutoController extends Controller
 { 
-    public static function index()
+    public static function index(): void
     {
         var_dump(value: $_POST);
-        echo "<br><br><a href='/register'>Voltar</a>";
+        echo "<br><br><a href='/register'>Voltar</a><br><br>";
     }
 }

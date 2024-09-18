@@ -14,6 +14,7 @@ class Conexao
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
             self::$instances[$cls] = new static();
+            if (self::$instances[$cls]::createConexao())
             self::$instances[$cls]::createConexao();
         }
 
@@ -37,18 +38,3 @@ class Conexao
         }
     }
 }
-
-/*function TestCode()
-{
-    $s1 = Conexao::getInstance();
-    $s2 = Conexao::getInstance();
-
-    if ($s1 === $s2) {
-        echo "Conexão deu boa";
-        
-    } else {
-        echo "Conexão deu ruim";
-    }
-}
-
-TestCode();*/
