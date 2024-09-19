@@ -13,6 +13,6 @@ class PostProdutoController extends Controller
         if($productModel->create($_POST)) {
             echo "Produto criado com sucesso!";
         }
-        echo "<br><br><a href='/register'>Voltar</a><br><br>";
+        echo "<br><br><a href='/register_produto'>Voltar</a><br><br>";
     }
 }

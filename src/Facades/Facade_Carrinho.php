@@ -1,5 +1,6 @@
 <?php 
-declare(strict_types = 1);
+namespace BilligKjop\Facades;
+use BilligKjop\Singleton\Carrinho;
 
 Class Facade_Carrinho{
 
@@ -15,7 +16,7 @@ Class Facade_Carrinho{
         }
         $total = $carrinho->calcularTotal();
         echo "\nTotal: R$ " . number_format($total, 2, ',', '.') . "\n";
-        echo "Compra realizada com sucesso!\n";
+        //envia para a classe que for lidar com o pagamento
         $carrinho->limparcarrinho();
     }
 }

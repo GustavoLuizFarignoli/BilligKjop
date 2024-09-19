@@ -1,4 +1,5 @@
 <?php 
+namespace BilligKjop\Classes;
 class Produto {
     private $nome;
     private $preco;

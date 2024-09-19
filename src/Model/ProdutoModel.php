@@ -14,13 +14,16 @@ class ProdutoModel extends Model
         $this->singleDataSql = "SELECT * FROM produtos WHERE produtos.id = $id";
     }
 
-    public function create(array $postData):bool {
+    public function create(array $postData) : bool {
         if (ProdutoChecker::checkInputs($postData)) {
+
             $con = Conexao::getInstance()::getConexao();
             $preparedSql = $con->prepare(query: $this->createSql);
             $preparedSql->bindValue(param: 1, value: $postData["nome"], type: \PDO::PARAM_STR);
             $preparedSql->bindValue(param: 2, value: $postData["preco"], type: \PDO::PARAM_STR);
+            
             return $preparedSql->execute();
+
         }
         echo "Verifique se o preco está entre R$ 1 e 1 bilhão! E o nome não contenha caracteres especiais.";
         return false;

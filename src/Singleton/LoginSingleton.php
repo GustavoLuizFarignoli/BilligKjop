@@ -1,7 +1,8 @@
-<?php 
-use Conexao;
+<?php
+namespace BilligKjop\Singleton; // "Quer dizer: /src/Singleton"
+use Conexao\Conexao;
 
-class Login
+class LoginSingleton
 { 
     private static $instances = [];
     
@@ -11,7 +12,7 @@ class Login
         
     }
 
-    public static function getInstance(): Login
+    public static function getInstance(): LoginSingleton
     {
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
@@ -28,5 +29,8 @@ class Login
     public function setEmail($email) {
         $this->email = $email;
     }
+
+    public static function HasIstance(){
+        return self::$instances;
+    }
 }
-?>

@@ -1,14 +1,14 @@
 <?php 
-declare(strict_types = 1);
+namespace BilligKjop\Singleton;
+use BilligKjop\Classes\Produto;
+
 
 class Carrinho
 { 
     private static $instances = [];
     
     private $produtos = [];
-
-    private $email = null;
-
+    
     protected function __construct()
     {
 
@@ -22,10 +22,6 @@ class Carrinho
         }
 
         return self::$instances[$cls];
-    }
-
-    public function getemai() {
-        return $this->email;
     }
 
     public function getprodutos() {
@@ -53,4 +49,3 @@ class Carrinho
         return $total;
     }
 }
-?>
