@@ -13,4 +13,8 @@ class UserModel extends Model
             $this->singleDataSql = "SELECT * FROM users WHERE users.id = $id";
         }
     }
+
+    public function create(array $postData):bool {
+        return true;
+    }
 }

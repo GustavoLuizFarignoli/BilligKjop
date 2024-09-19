@@ -3,7 +3,7 @@ namespace Config;
 
 class Conexao
 { 
-    private static $instances = [];
+    private static $instance;
     
     private static \PDO $conexao;
 
@@ -11,17 +11,19 @@ class Conexao
 
     public static function getInstance(): Conexao
     {
-        $cls = static::class;
-        if (!isset(self::$instances[$cls])) {
-            self::$instances[$cls] = new static();
-            if (self::$instances[$cls]::createConexao())
-            self::$instances[$cls]::createConexao();
-        }
-
-        return self::$instances[$cls];
+        if (isset(self::$instance)) return self::$instance;
+        return self::createInstance();
     }
 
-    public function getConexao(): \PDO {
+    protected static function createInstance(): Conexao
+    {
+        $cls = static::class;
+        self::$instance = new $cls();
+        self::$instance::createConexao();
+        return self::$instance;
+    }
+
+    public static function getConexao(): \PDO {
         return self::$conexao;
     }
 
@@ -33,7 +35,8 @@ class Conexao
         try {
             self::$conexao = new \PDO(dsn: "mysql:host=$dbip;dbname=$dbname", username: $user, password: $pass);
             return true;
-        } catch (\Exception $e) {
+        } catch (\PDOException $e) {
+            error_log(message: "Erro de conexão ao banco de dados: " . $e->getMessage());
             return false;
         }
     }

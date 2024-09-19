@@ -32,7 +32,7 @@ class GetProdutoController extends Controller
                         "Content-Type" => "application/json"
                     ],
                     "body" => [
-                        "message" => "Usuario encontrado.",
+                        "message" => "Produto encontrado.",
                         "data" => $productData
                     ]
                 ]
@@ -45,7 +45,7 @@ class GetProdutoController extends Controller
                         "Content-Type" => "application/json"
                     ],
                     "body" => [
-                        "message" => "Usuario nao encontrado!",
+                        "message" => "Produto nao encontrado!",
                         "data" => null
                     ]
                 ]
@@ -62,7 +62,7 @@ class GetProdutoController extends Controller
                     "Content-Type" => "application/json"
                 ],
                 "body" => [
-                    "message" => "Lista de usuarios encontrados",
+                    "message" => "Lista de produtos encontrados",
                     "data" => $productData
                 ]
             ]

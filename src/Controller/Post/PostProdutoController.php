@@ -9,7 +9,10 @@ class PostProdutoController extends Controller
 { 
     public static function index(): void
     {
-        var_dump(value: $_POST);
+        $productModel = new ProdutoModel();
+        if($productModel->create($_POST)) {
+            echo "Produto criado com sucesso!";
+        }
         echo "<br><br><a href='/register'>Voltar</a><br><br>";
     }
 }
