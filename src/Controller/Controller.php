@@ -6,6 +6,7 @@ abstract class Controller
 {
 
     public abstract static function index(): void;
+    public static bool $needLogin;
     /*public abstract static function indexBody(): void;
 
     public static function index(bool $needLogin): void {

@@ -13,7 +13,7 @@ class UserModel extends Model
         if ($email != '') {
             $this->singleDataSql = "SELECT * FROM usuario WHERE usuario.email = '$email'";
         } else if ($id != -1) {
-            $this->singleDataSql = "SELECT * FROM usuario WHERE usuario.id = $id";
+            $this->singleDataSql = "SELECT * FROM usuario WHERE usuario.id_usuario = $id";
         }
     }
 

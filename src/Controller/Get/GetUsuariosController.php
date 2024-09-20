@@ -12,8 +12,8 @@ class GetUsuariosController extends Controller{
     }
 
     public static function getData(){
-        if (isset($_GET['id_usuario'])) {
-            $usermodel = new UserModel();
+        if (isset($_GET['id'])) {
+            $usermodel = new UserModel(id: (int) $_GET['id']);
             $userdata = $usermodel->getByIdentifierFromDb();
 
             if ($userdata) return json_encode(

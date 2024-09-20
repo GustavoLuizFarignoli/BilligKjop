@@ -9,7 +9,6 @@ class RegistroProdutoController extends Controller
         //require "View/create_product.html";
         if (self::IsLogged(2)) {
             $login = $_SESSION['login'];
-            echo "Nome do usuario logado: " . $login->getNome();
             require "View/create_product.html";
         } 
     }
