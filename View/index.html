@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista | Rotas</title>
+</head>
+<style>
+
+    ul {
+        display: inline-block;
+        background-color: gray;
+    }
+
+    .get {
+        display: block;
+        cursor: pointer;
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+    }
+
+    .get:hover{
+        background-color: darkblue;
+    }
+
+    .post {
+        display: block;
+        background-color: green;
+        color: white;
+        font-weight: bold;
+    }
+
+    .post:hover{
+        background-color: darkgreen;
+    }
+</style>
+<body>
+    <h1>Lista de rotas:</h1>
+    <ul>
+        <a class="get" href="/login">GET|/login</a>
+        <a class="get" href="/register_produto">GET|/register_produto</a>
+        <a class="get" href="/register_usuario">GET|/register_usuario</a>
+        <a class="get" href="/get/produto">GET|/get/produto</a>
+        <a class="post" href="/login">POST|/login</a>
+        <a class="post" href="#SoPost">POST|/post/produto</a>
+        <a class="post" href="#SoPost">POST|/post/usuario</a>
+    </ul>
+</body>
+</html>

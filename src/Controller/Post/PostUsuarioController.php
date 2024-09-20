@@ -16,6 +16,6 @@ class PostUsuarioController extends Controller
             $facadelogin = new Facade_Login();
             $email = $_POST['email'];
         }
-        echo "<br><br><a href='/register_usuario'>Voltar</a><br><br>";
+        echo "<br><br><a href='/'>Voltar</a><br><br>";
     }
 }

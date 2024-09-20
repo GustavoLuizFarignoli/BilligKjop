@@ -27,13 +27,13 @@ class UserChecker
     }
 
     public static function checkName(string $name):bool {
-        $pattern = "/^(?=.*[A-z])[A-z0-9\ ]{2,255}$/";
+        $pattern = "/^(?=.*[A-Za-zÀ-ÿ])[A-Za-z0-9 \'\-À-ÿ]{1,255}$/";
         $result = preg_match(pattern: $pattern, subject: $name);
         return $result;
     }
 
     public static function checkEmail(string $email):bool {
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $email = filter_var(value: $email, filter: FILTER_SANITIZE_EMAIL);
         $pattern = "/^[A-z0-9]?.*$/";
         $result = preg_match(pattern: $pattern, subject: $email);
         return $result;
