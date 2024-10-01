@@ -28,8 +28,8 @@ class Conexao
     }
 
     public static function createConexao(): bool {
-        $user = "gb";
-        $pass = "mysql@204";
+        $user = "root";
+        $pass = "EgSoftware#24";
         $dbname = "billigkjop";
         $dbip = "localhost";
         try {
