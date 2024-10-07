@@ -22,6 +22,7 @@ class Facade_Login {
                 echo "Logado com Sucesso";
                 var_dump($login);
                 echo "<br><br>Nome do usuario: " . $login->getNome();
+                echo "<br><br><a href='/'>Voltar</a><br><br>";
                 exit();
             }
             echo "Senha Incorreta, tente novamente";
