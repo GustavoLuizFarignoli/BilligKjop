@@ -31,4 +31,10 @@ abstract class Controller
         }
         return true;
     }
+
+    public static function decode() {
+        $jsonBody = file_get_contents('php://input');
+        $data = json_decode($jsonBody, true); // Decodifica o JSON em um array associativo
+        return $data;
+    }
 }

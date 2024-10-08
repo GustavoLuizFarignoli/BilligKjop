@@ -9,10 +9,9 @@ class PostUsuarioController extends Controller
     public static function index(): void
     {
         $userModel = new UserModel();
-        $jsonBody = file_get_contents('php://input');
-        $data = json_decode($jsonBody, true); // Decodifica o JSON em um array associativo
+        $data = self::decode();
         if ($userModel->create($data)) {
-            echo "Usuario criado com sucesso!";
+            //echo "Usuario criado com sucesso!";
             $facadelogin = new Facade_Login();
             $email = $data['email'];
         }
