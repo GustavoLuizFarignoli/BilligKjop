@@ -4,17 +4,17 @@ use BilligKjop\Model\UserModel;
 use BilligKjop\Controller\Controller;
 use BilligKjop\Facades\Facade_Login;
 
-# Essa classe será utilizada apenas para salvar no banco as informações do Produto criado.
-
 class PostUsuarioController extends Controller
 { 
     public static function index(): void
     {
         $userModel = new UserModel();
-        if ($userModel->create($_POST)) {
+        $jsonBody = file_get_contents('php://input');
+        $data = json_decode($jsonBody, true); // Decodifica o JSON em um array associativo
+        if ($userModel->create($data)) {
             echo "Usuario criado com sucesso!";
             $facadelogin = new Facade_Login();
-            $email = $_POST['email'];
+            $email = $data['email'];
         }
         echo "<br><br><a href='/'>Voltar</a><br><br>";
     }
