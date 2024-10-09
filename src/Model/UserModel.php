@@ -29,6 +29,7 @@ class UserModel extends Model
             return $preparedSql->execute();
 
         }
+        http_response_code(404);
         echo "Email já cadastrado ou inputs inválidos (Nome deve conter apenas com letras e espaços)";
         return false;
         

@@ -15,7 +15,7 @@ class ProdutoModel extends Model
     }
 
     public function create(array $postData) : bool {
-        if (ProdutoChecker::checkInputs($postData)) {
+        if (ProdutoChecker::checkInputs(postData: $postData)) {
             $con = Conexao::getInstance()::getConexao();
             $preparedSql = $con->prepare(query: $this->createSql);
             $preparedSql->bindValue(param: 1, value: $postData["nome"], type: \PDO::PARAM_STR);

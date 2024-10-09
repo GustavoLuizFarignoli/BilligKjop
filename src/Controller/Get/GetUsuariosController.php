@@ -8,7 +8,7 @@ class GetUsuariosController extends Controller{
     public static function index(): void
     {
         echo self::getData();
-        echo "<br><br><a href='/'>Voltar</a><br><br>";
+        echo "<br><br><a href='/api'>Voltar</a><br><br>";
     }
 
     public static function getData(){

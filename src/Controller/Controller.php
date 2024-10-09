@@ -32,9 +32,9 @@ abstract class Controller
         return true;
     }
 
-    public static function decode() {
+    public static function json_decode_body() {
         $jsonBody = file_get_contents('php://input');
-        $data = json_decode($jsonBody, true); // Decodifica o JSON em um array associativo
+        $data = json_decode($jsonBody, true);
         return $data;
     }
 }

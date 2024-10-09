@@ -3,6 +3,7 @@
     require_once 'vendor/autoload.php';
     // Permitir requisições de qualquer origem (para testes) ou especificar o domínio da sua aplicação
     header("Access-Control-Allow-Origin: http://localhost:5173");
+    header("Access-Control-Allow-Origin: http://26.193.92.153:5173");
 
     // Permitir os métodos HTTP necessários, como POST
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");

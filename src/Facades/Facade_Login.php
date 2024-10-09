@@ -12,6 +12,7 @@ class Facade_Login {
     public static function Loggar($email, $senhaInserida): void{
         $dadosUsuario = new UserModel(email: $email);
         $dadosUsuario = $dadosUsuario->getByIdentifierFromDb();
+        error_log("Entrou no Facade_Login");
         
         if ($dadosUsuario) {
             $isPasswordCorrect = self::verifyUserPassword(senhaInserida: $senhaInserida, senhaBanco: $dadosUsuario['senha']);
@@ -19,16 +20,16 @@ class Facade_Login {
                 $login = LoginSingleton::getInstance();
                 $login->setUserData(userData: $dadosUsuario);
                 self::initializeSession(loginSingleton: $login);
-                echo "Logado com Sucesso";
+                error_log("Logado com Sucesso");
                 var_dump($login);
                 echo "<br><br>Nome do usuario: " . $login->getNome();
-                echo "<br><br><a href='/'>Voltar</a><br><br>";
+                echo "<br><br><a href='/api'>Voltar</a><br><br>";
                 exit();
             }
-            echo "Senha Incorreta, tente novamente";
+            error_log("Senha Incorreta, tente novamente");
             exit();
         } 
-        echo "Conta não cadastrada, Gostaria de Fazer seu Cadastro ?<br><a href='/register_usuario'>Registre-se aqui!</a>";
+        error_log("Conta não cadastrada, Gostaria de Fazer seu Cadastro ?<br><a href='/register_usuario'>Registre-se aqui!</a>");
         exit();
     }
 
