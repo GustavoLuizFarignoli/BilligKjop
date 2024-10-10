@@ -34,7 +34,7 @@ abstract class Controller
 
     public static function json_decode_body() {
         $jsonBody = file_get_contents('php://input');
-        $data = json_decode($jsonBody, true);
+        $data = json_decode(json: $jsonBody, associative: true);
         return $data;
     }
 }

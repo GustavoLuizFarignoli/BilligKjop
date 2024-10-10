@@ -10,13 +10,11 @@ class PostUsuarioController extends Controller
     {
         $userModel = new UserModel();
         $data = self::json_decode_body();
-        if ($userModel->create($data)) {
-            //echo "Usuario criado com sucesso!";
+        if ($userModel->create(postData: $data)) {
             $facadelogin = new Facade_Login();
             $email = $data['email'];
             $senha = $data['senha'];
-            $facadelogin::Loggar($email,$senha);
+            $facadelogin::Loggar(email: $email,senhaInserida: $senha);
         }
-        echo "<br><br><a href='/'>Voltar</a><br><br>";
     }
 }

@@ -9,7 +9,7 @@
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
 
     // Permitir certos cabeçalhos, como Content-Type
-    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization, x-xsrf-token, x_csrf-token, Cache-Control, X-Requested-With");
 
     // Tratar a requisição OPTIONS (preflight), que o navegador envia antes da requisição principal
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

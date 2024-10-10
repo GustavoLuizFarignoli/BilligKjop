@@ -6,7 +6,6 @@
         "GET|/api/register_endereco" => BilligKjop\Controller\RegistroEnderecoController::class,
         "GET|/api/get/produto"      => BilligKjop\Controller\Get\GetProdutoController::class,
         "GET|/api/get/usuarios"     => BilligKjop\Controller\Get\GetUsuariosController::class,
-        "GET|/api/login"            => BilligKjop\Controller\LoginController::class,
         "POST|/api/post/produto"    => BilligKjop\Controller\Post\PostProdutoController::class,
         "POST|/api/post/usuario"    => BilligKjop\Controller\Post\PostUsuarioController::class,
         "POST|/api/post/endereco"   => BilligKjop\Controller\Post\PostEnderecoController::class,
