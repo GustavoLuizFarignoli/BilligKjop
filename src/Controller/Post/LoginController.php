@@ -1,6 +1,7 @@
 <?php
-namespace BilligKjop\Controller;
+namespace BilligKjop\Controller\Post;
 use BilligKjop\Facades\Facade_Login;
+use BilligKjop\Controller\Controller;
 
 class LoginController extends Controller
 { 

@@ -31,7 +31,7 @@ class Facade_Login {
             http_response_code(response_code: 401); // SENHA INVÁLIDA!
             exit();
         } 
-        error_log(message: "Conta não cadastrada, Gostaria de Fazer seu Cadastro ?<br><a href='/register_usuario'>Registre-se aqui!</a>");
+        http_response_code(response_code: 404); //E-mail não esta cadastrado no banco
         exit();
     }
 
