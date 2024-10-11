@@ -3,6 +3,7 @@ namespace BilligKjop\Model;
 use BilligKjop\Model\Model;
 use Config\Conexao;
 use BilligKjop\Model\Checkers\UserChecker;
+use BilligKjop\Enums\SqlErrorsCodeMessage;
 
 class UserModel extends Model
 {
@@ -32,10 +33,14 @@ class UserModel extends Model
         ];
         $preparedSql = $this->bindValues(preparedSql: $preparedSql, valuesAndTypes: $valuesAndTypes);
         // Falta mandar imagem pro banco
-        return $preparedSql->execute();
 
-        
-        
+        try {
+            return $preparedSql->execute();
+        } catch (\Exception $exception){
+            http_response_code(response_code: 500);
+            SqlErrorsCodeMessage::echoErrorMessage(sqlErrorCode: $exception->getCode());
+            exit();
+        }
     }
 
     public function encryptPassword($senha): string

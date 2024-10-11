@@ -23,11 +23,14 @@ class RouteManager
     public function initializeControllerByUrlKey(string $urlKey): void
     {
         $routeExists = array_key_exists(key: $urlKey, array: $this->routes);
-        if ($routeExists) {
-                $controllerClass = $this->routes[$urlKey];
-                $controllerClass::index();
-                exit();
+
+        if (!$routeExists) {
+            Error404Controller::index();
         }
-        Error404Controller::index();
+        
+        $controllerClass = $this->routes[$urlKey];
+        $controllerClass::index();
+        exit();
+        
     }
 }
