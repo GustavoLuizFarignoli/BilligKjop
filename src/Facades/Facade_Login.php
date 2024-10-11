@@ -13,25 +13,31 @@ class Facade_Login {
     const HOURS_TO_EXPIRE = 1 * 3600;
 
     public static function index(): void {
-        self::Loggar(email: $_POST['email'], senhaInserida: $_POST['senha']);
+        $email = $_POST['email'];
+        $password = $_POST['senha'];
+        self::createLoginToken(email: $email, senhaInserida: $password);
     }
 
-    public static function Loggar($email, $senhaInserida): void{
+    public static function createLoginToken($email, $senhaInserida): void{
         $dadosUsuario = new UserModel(email: $email);
         $dadosUsuario = $dadosUsuario->getByIdentifierFromDb();
 
-        if ($dadosUsuario) {
-            $isPasswordCorrect = self::verifyUserPassword(senhaInserida: $senhaInserida, senhaBanco: $dadosUsuario['senha']);
-            if ($isPasswordCorrect) {
-                self::createAndPopulateLoginSingleton(data: $dadosUsuario);
-                $createdToken = self::createToken(dadosUsuario: $dadosUsuario);
-                echo $createdToken;
-                exit();
-            }
-            http_response_code(response_code: 401); // SENHA INVÁLIDA!
+        if (!$dadosUsuario) { // Caso a conta não tenha sido encontrada, retornamos 404 (Não encontrado)
+            http_response_code(response_code: 404); 
             exit();
-        } 
-        http_response_code(response_code: 404); //E-mail não esta cadastrado no banco
+        }
+
+        $isPasswordCorrect = self::verifyUserPassword(senhaInserida: $senhaInserida, senhaBanco: $dadosUsuario['senha']);
+
+        if (!$isPasswordCorrect) { // Se senha não está correta, retornamos 401 (Não autorizado)
+            http_response_code(response_code: 401);
+            exit();
+        }
+
+        self::createAndPopulateLoginSingleton(data: $dadosUsuario);
+        $createdToken = self::createToken(dadosUsuario: $dadosUsuario);
+        http_response_code(response_code: 200);
+        echo $createdToken;
         exit();
     }
 
@@ -43,6 +49,7 @@ class Facade_Login {
 
     public static function initializeSession($loginSingleton): void {
         session_start();
+        session_regenerate_id(true);
         $_SESSION['login'] = $loginSingleton;
     }
 
@@ -63,7 +70,6 @@ class Facade_Login {
         $encodedPayload = JWT::encode(payload: $payload, key: $_ENV['KEY'], alg: "HS256");
         $encodedJson = json_encode(value: $encodedPayload);
 
-        if (!$encodedJson) return "";
-        return $encodedJson;
+        return !$encodedJson ? "" : $encodedJson;
     }
 }

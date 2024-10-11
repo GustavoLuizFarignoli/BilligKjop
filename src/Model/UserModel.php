@@ -18,20 +18,23 @@ class UserModel extends Model
     }
 
     public function create(array $postData) : bool {
-        if (UserChecker::checkInputs($postData)) {
-
-            $con = Conexao::getInstance()::getConexao();
-            $preparedSql = $con->prepare(query: $this->createSql);
-            $preparedSql->bindValue(param: 1, value: $postData["email"], type: \PDO::PARAM_STR);
-            $preparedSql->bindValue(param: 2, value: $this->encryptPassword(senha: $postData["senha"]), type: \PDO::PARAM_STR);
-            $preparedSql->bindValue(param: 3, value: $postData["nome"], type: \PDO::PARAM_STR);
-            //falta mandar imagem pro banco
-            return $preparedSql->execute();
-
+        if (!UserChecker::checkInputs(postData: $postData)) {  // Email já cadastrado ou inputs inválidos (Nome deve conter apenas com letras e espaços)
+            http_response_code(response_code: 400);
+            return false;
         }
-        http_response_code(response_code: 400);
-        echo "Email já cadastrado ou inputs inválidos (Nome deve conter apenas com letras e espaços)";
-        return false;
+
+        $con = Conexao::getInstance()::getConexao();
+        $preparedSql = $con->prepare(query: $this->createSql);
+        $valuesAndTypes = [
+            [$postData['email'], \PDO::PARAM_STR],
+            [$this->encryptPassword(senha: $postData["senha"]), \PDO::PARAM_STR],
+            [$postData["nome"], \PDO::PARAM_STR]
+        ];
+        $preparedSql = $this->bindValues(preparedSql: $preparedSql, valuesAndTypes: $valuesAndTypes);
+        // Falta mandar imagem pro banco
+        return $preparedSql->execute();
+
+        
         
     }
 
@@ -39,5 +42,14 @@ class UserModel extends Model
     {
         $senhaCriptografada = password_hash(password: $senha, algo: PASSWORD_ARGON2ID);
         return $senhaCriptografada;
+    }
+
+    public function bindValues($preparedSql, array $valuesAndTypes) {
+        $counter = 1;
+        foreach ($valuesAndTypes as $valueAndType) {
+            $preparedSql->bindValue(param: $counter, value: $valueAndType[0], type: $valueAndType[1]);
+            $counter += 1;
+        }
+        return $preparedSql;
     }
 }

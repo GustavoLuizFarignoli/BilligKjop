@@ -14,7 +14,7 @@ class PostUsuarioController extends Controller
             $facadelogin = new Facade_Login();
             $email = $data['email'];
             $senha = $data['senha'];
-            $facadelogin::Loggar(email: $email,senhaInserida: $senha);
+            $facadelogin::createLoginToken(email: $email, senhaInserida: $senha);
         }
     }
 }

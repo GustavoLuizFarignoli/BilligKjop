@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'gabri/billig-kjop',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '9b3d288c0cda27b00652cf3ccbd83023ac698a15',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'gabri/billig-kjop' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '9b3d288c0cda27b00652cf3ccbd83023ac698a15',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

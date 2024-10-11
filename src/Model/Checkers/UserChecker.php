@@ -19,10 +19,10 @@ class UserChecker
         return $requiredFieldsFilled;
     }
 
-    public static function checkInputs(array $postData): int
+    public static function checkInputs(array $postData): bool
     {
-        $isNameValid = self::checkName($postData["nome"]);
-        $isPriceValid = self::checkEmail($postData["email"]);
+        $isNameValid = self::checkName(name: $postData["nome"]);
+        $isPriceValid = self::checkEmail(email: $postData["email"]);
         return $isNameValid && $isPriceValid;
     }
 

@@ -31,7 +31,7 @@ class LoginSingleton
         $atual->setNome(nome: $userData['nome']);
         $atual->setEmail(email: $userData['email']);
         //$login->setImagem(imagem: $dadosUsuario['imagem']);
-        $atual->setTipo(tipo: $userData['id_tipo_usuario_FK']); //depois tem que alterar para poder loggar como vendedor
+        $atual->setTipo(tipo: $userData['id_tipo_usuario_FK']); //depois tem que alterar para poder logar como vendedor
     }
 
     public function getId(){

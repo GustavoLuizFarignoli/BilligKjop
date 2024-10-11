@@ -1,12 +1,11 @@
 <?php
     use Config\RouteManager;
     require_once 'vendor/autoload.php';
-    // Permitir requisições de qualquer origem (para testes) ou especificar o domínio da sua aplicação
-    header("Access-Control-Allow-Origin: http://localhost:5173");
-    header("Access-Control-Allow-Origin: http://26.193.92.153:5173");
+    // Permitir requisições de qualquer origem (para testes) * ou especificar o domínio da sua aplicação
+    header("Access-Control-Allow-Origin: *"); // NÃO PRECISA MAIS INSERIR URL PERSONALIZADA AQUI!
 
-    // Permitir os métodos HTTP necessários, como POST
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
+    // Permitir os métodos HTTP necessários, como POST, GET, OPTIONS, DELETE, PUT
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT");
 
     // Permitir certos cabeçalhos, como Content-Type
     header("Access-Control-Allow-Headers: Content-Type, Authorization, x-xsrf-token, x_csrf-token, Cache-Control, X-Requested-With");
