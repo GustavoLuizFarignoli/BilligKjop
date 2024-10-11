@@ -10,7 +10,7 @@ $dotenv = Dotenv::createImmutable(dirname(path: __FILE__, levels: 3));
 $dotenv->load();
 
 class Facade_Login {
-    const HOURS_TO_EXPIRE = 1 * 3600;
+    const HOURS_TO_EXPIRE = 0.25/60 * 3600;
 
     public static function index(): void {
         $email = $_POST['email'];
@@ -67,6 +67,7 @@ class Facade_Login {
             "tipo" => $dadosUsuario['id_tipo_usuario_FK']
         ];
 
+        error_log($_ENV['KEY']);
         $encodedPayload = JWT::encode(payload: $payload, key: $_ENV['KEY'], alg: "HS256");
         $encodedJson = json_encode(value: $encodedPayload);
 

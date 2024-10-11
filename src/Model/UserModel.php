@@ -43,6 +43,33 @@ class UserModel extends Model
         }
     }
 
+    public function update(array $putData): bool {
+        error_log(implode($putData));
+        # Verifica se os novos VALORES são válidos
+        if (UserChecker::checkInputs(postData:$putData)){
+            #   Caso valores válidos, atualizar string de SQL com informações passadas.
+            $updateQuery = "UPDATE usuario SET ";
+            foreach ($putData as $key => $attribute) {
+                if ($key != "email") {
+                    $updateQuery .= "$key = '" . $attribute . "' ,";
+                }
+            }
+            $updateQuery = substr($updateQuery, 0, -1);
+            $updateQuery .= "WHERE usuario.email = '" . $putData["email"] . "'";
+            error_log($updateQuery);
+
+            $con = Conexao::getInstance()::getConexao();
+            $preparedSql = $con->prepare(query: $updateQuery);
+            return $preparedSql->execute();
+
+        } else {
+             #   Caso valores inválidos, cancelar operação.
+            http_response_code(response_code: 400);
+            return false;
+        }
+        # Retornar código de criação/atualização 200 OK e TOKEN com informações atualizadas.
+    } 
+
     public function encryptPassword($senha): string
     {
         $senhaCriptografada = password_hash(password: $senha, algo: PASSWORD_ARGON2ID);

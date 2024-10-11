@@ -1,5 +1,6 @@
 <?php
 namespace Config;
+use Dotenv\Dotenv;
 
 class Conexao
 { 
@@ -27,9 +28,9 @@ class Conexao
         return self::$conexao;
     }
 
-    public static function createConexao(): bool {
-        $user = "gb";
-        $pass = "mysql@204";
+    public static function createConexao(): bool {        
+        $user = "root";
+        $pass = "EgSoftware#24";
         $dbname = "billigkjop";
         $dbip = "localhost";
         try {
