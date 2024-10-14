@@ -10,9 +10,9 @@ class PostEnderecoController extends Controller
     public static function index(): void
     {
         $EnderecoModel = new EnderecoModel();
-        if ($EnderecoModel->create($_POST)) {
-            echo "endereco adicionado com sucesso!";
+        $enderecoData = self::json_decode_body();
+        if ($EnderecoModel->create($enderecoData)) {
+            error_log("endereco adicionado com sucesso!");
         }
-        echo "<br><br><a href='/'>Voltar</a><br><br>";
     }
 }

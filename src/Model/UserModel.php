@@ -60,7 +60,11 @@ class UserModel extends Model
 
             $con = Conexao::getInstance()::getConexao();
             $preparedSql = $con->prepare(query: $updateQuery);
-            return $preparedSql->execute();
+            $success = $preparedSql->execute();
+
+            header('Content-Type: application/json');
+            echo json_encode(['success' => $success]);
+            return $success;
 
         } else {
              #   Caso valores inválidos, cancelar operação.
@@ -69,6 +73,20 @@ class UserModel extends Model
         }
         # Retornar código de criação/atualização 200 OK e TOKEN com informações atualizadas.
     } 
+
+    public function delete(array $deleteData): bool{
+        $deleteQuery = "delete from usuario where usuario.email = '" . $deleteData["email"] . "'";
+        error_log($deleteQuery);
+
+        
+        $con = Conexao::getInstance()::getConexao();
+        $preparedSql = $con->prepare(query: $deleteQuery);
+        $success = $preparedSql->execute();
+
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $success]);
+        return $success;
+    }
 
     public function encryptPassword($senha): string
     {

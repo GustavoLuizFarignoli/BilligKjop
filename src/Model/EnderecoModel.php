@@ -5,7 +5,7 @@ use Config\Conexao;
 class EnderecoModel extends Model
 {
     protected string $allDataSql = "SELECT * FROM enderecos";
-    protected string $createSql = "INSERT INTO enderecos (enderecos.cep, enderecos.rua, enderecos.numero, enderecos.cidade, enderecos.estado, enderecos.pais) VALUES (?, ?, ?, ?, ?, ?)";
+    protected string $createSql = "INSERT INTO enderecos (enderecos.cep, enderecos.rua, enderecos.numero, enderecos.cidade, enderecos.estado) VALUES (?, ?, ?, ?, ?)";
 
     public function __construct(int $id = -1) {
         $this->singleDataSql = "SELECT * FROM enderecos WHERE enderecos.id_endereco = $id";
@@ -19,9 +19,12 @@ class EnderecoModel extends Model
             $preparedSql->bindValue(param: 3, value: $postData["numero"], type: \PDO::PARAM_INT);
             $preparedSql->bindValue(param: 4, value: $postData["cidade"], type: \PDO::PARAM_STR);
             $preparedSql->bindValue(param: 5, value: $postData["estado"], type: \PDO::PARAM_STR);
-            $preparedSql->bindValue(param: 6, value: $postData["pais"], type: \PDO::PARAM_STR);
+            //$preparedSql->bindValue(param: 6, value: $postData["pais"], type: \PDO::PARAM_STR);
             
-            return $preparedSql->execute();
+            $success = $preparedSql->execute();
+            header('Content-Type: application/json');
+            echo json_encode(['success' => $success]);
+            return $success;
     }
 
 }

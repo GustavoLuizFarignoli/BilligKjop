@@ -10,5 +10,6 @@
         "POST|/api/post/usuario"    => BilligKjop\Controller\Post\PostUsuarioController::class,
         "POST|/api/post/endereco"   => BilligKjop\Controller\Post\PostEnderecoController::class,
         "POST|/api/login"           => BilligKjop\Controller\Post\LoginController::class,
-        "PUT|/api/put/usuario"      => BilligKjop\Controller\Put\PutUsuarioController::class   
+        "PUT|/api/put/usuario"      => BilligKjop\Controller\Put\PutUsuarioController::class,
+        "DELETE|/api/delete/usuario"   => BilligKjop\Controller\Delete\DeleteUsuarioController::class
     ];
