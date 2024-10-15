@@ -9,12 +9,10 @@ class PostProdutoController extends Controller
 { 
     public static function index(): void
     {
-        session_start();
         $productModel = new ProdutoModel();
-        $_POST['id_usuario'] = $_SESSION['login']->getId();
-        if($productModel->create(postData: $_POST)) {
-            echo "Produto criado com sucesso!";
+        $productData = self::json_decode_body();
+        if($productModel->create(postData: $productData)) {
+            error_log("Produto criado com sucesso!");
         }
-        echo "<br><br><a href='/'>Voltar</a><br><br>";
     }
 }

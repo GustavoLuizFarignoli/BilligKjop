@@ -21,12 +21,13 @@ class ProdutoModel extends Model
             $preparedSql->bindValue(param: 1, value: $postData["nome"], type: \PDO::PARAM_STR);
             $preparedSql->bindValue(param: 2, value: $postData["descricao"], type: \PDO::PARAM_STR);
             $preparedSql->bindValue(param: 3, value: $postData["preco"], type: \PDO::PARAM_STR);
-            $preparedSql->bindValue(param: 4, value: $postData["id_usuario"], type: \PDO::PARAM_INT);
+            //$preparedSql->bindValue(param: 4, value: $postData["id_usuario"], type: \PDO::PARAM_INT);
+            $preparedSql->bindValue(param: 4, value: 1, type: \PDO::PARAM_INT);
             
             return $preparedSql->execute();
 
         }
-        echo "Verifique se o preco está entre R$ 1 e 1 bilhão! E o nome não contenha caracteres especiais.";
+        error_log("Verifique se o preco está entre R$ 1 e 1 bilhão! E o nome não contenha caracteres especiais.");
         return false;
     }
 }
