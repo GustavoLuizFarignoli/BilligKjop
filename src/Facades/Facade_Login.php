@@ -1,5 +1,6 @@
 <?php
 namespace BilligKjop\Facades;
+use BilligKjop\Token\TokenUser;
 use BilligKjop\Model\UserModel;
 use BilligKjop\Singleton\LoginSingleton;
 use Firebase\JWT\JWT;
@@ -15,10 +16,10 @@ class Facade_Login {
     public static function index(): void {
         $email = $_POST['email'];
         $password = $_POST['senha'];
-        self::createLoginToken(email: $email, senhaInserida: $password);
+        self::getLoginToken(email: $email, senhaInserida: $password);
     }
 
-    public static function createLoginToken($email, $senhaInserida): void{
+    public static function getLoginToken($email, $senhaInserida): void{
         $dadosUsuario = new UserModel(email: $email);
         $dadosUsuario = $dadosUsuario->getByIdentifierFromDb();
 
@@ -33,11 +34,11 @@ class Facade_Login {
             http_response_code(response_code: 401);
             exit();
         }
-
+        
         self::createAndPopulateLoginSingleton(data: $dadosUsuario);
-        $createdToken = self::createToken(dadosUsuario: $dadosUsuario);
         http_response_code(response_code: 200);
-        echo $createdToken;
+        echo TokenUser::createTokenFromEmail(email: $email);
+        
         exit();
     }
 
@@ -56,22 +57,5 @@ class Facade_Login {
     public static function verifyUserPassword($senhaInserida, $senhaBanco): bool {
         $correctPassword = password_verify(password: $senhaInserida, hash: $senhaBanco ?? '');
         return $correctPassword;
-    }
-
-    public static function createToken($dadosUsuario): string {
-        $payload = [
-            "exp" => time() + self::HOURS_TO_EXPIRE,
-            "iat" => time(),
-            "nome" => $dadosUsuario['nome'],
-            "email" => $dadosUsuario['email'],
-            "tipo" => $dadosUsuario['id_tipo_usuario_FK'],
-            "id" => $dadosUsuario['id_usuario']
-        ];
-
-        error_log($_ENV['KEY']);
-        $encodedPayload = JWT::encode(payload: $payload, key: $_ENV['KEY'], alg: "HS256");
-        $encodedJson = json_encode(value: $encodedPayload);
-
-        return !$encodedJson ? "" : $encodedJson;
     }
 }

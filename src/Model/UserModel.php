@@ -4,6 +4,7 @@ use BilligKjop\Model\Model;
 use Config\Conexao;
 use BilligKjop\Model\Checkers\UserChecker;
 use BilligKjop\Enums\SqlErrorsCodeMessage;
+use BilligKjop\Token\TokenUser;
 
 class UserModel extends Model
 {
@@ -53,10 +54,10 @@ class UserModel extends Model
             error_log(message: $updateQuery);
             
             try {
-                header('Content-Type: application/json');
                 $success = $preparedSql->execute();
-                echo json_encode(['status' => true]);
+                TokenUser::createTokenFromEmail($putData["email"]);
             } catch (\Exception $e) {
+                header('Content-Type: application/json');
                 http_response_code(response_code: 500);
                 SqlErrorsCodeMessage::echoJsonErrorMessage(sqlErrorCode: $e->getCode());
             }

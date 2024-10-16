@@ -11,6 +11,6 @@ class LoginController extends Controller
         $facadelogin = new Facade_Login();
         $email = $data['email'];
         $senha = $data['senha'];
-        $facadelogin::createLoginToken(email: $email, senhaInserida: $senha);
+        $facadelogin::getLoginToken(email: $email, senhaInserida: $senha);
     }
 }
