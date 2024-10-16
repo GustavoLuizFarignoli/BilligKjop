@@ -64,7 +64,8 @@ class Facade_Login {
             "iat" => time(),
             "nome" => $dadosUsuario['nome'],
             "email" => $dadosUsuario['email'],
-            "tipo" => $dadosUsuario['id_tipo_usuario_FK']
+            "tipo" => $dadosUsuario['id_tipo_usuario_FK'],
+            "id" => $dadosUsuario['id_usuario']
         ];
 
         error_log($_ENV['KEY']);

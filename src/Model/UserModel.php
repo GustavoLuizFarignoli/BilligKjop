@@ -38,37 +38,35 @@ class UserModel extends Model
             return $preparedSql->execute();
         } catch (\Exception $exception){
             http_response_code(response_code: 500);
-            SqlErrorsCodeMessage::echoErrorMessage(sqlErrorCode: $exception->getCode());
+            SqlErrorsCodeMessage::echoJsonErrorMessage(sqlErrorCode: $exception->getCode());
             exit();
         }
     }
 
     public function update(array $putData): bool {
-        error_log(implode($putData));
         # Verifica se os novos VALORES são válidos
-        if (UserChecker::checkInputs(postData:$putData)){
+        if (UserChecker::checkInputs(postData:$putData)) {
             #   Caso valores válidos, atualizar string de SQL com informações passadas.
-            $updateQuery = "UPDATE usuario SET ";
-            foreach ($putData as $key => $attribute) {
-                if ($key != "email") {
-                    $updateQuery .= "$key = '" . $attribute . "' ,";
-                }
-            }
-            $updateQuery = substr($updateQuery, 0, -1);
-            $updateQuery .= "WHERE usuario.email = '" . $putData["email"] . "'";
-            error_log($updateQuery);
-
+            $updateQuery = self::populateUpdateSql(putData: $putData);
             $con = Conexao::getInstance()::getConexao();
             $preparedSql = $con->prepare(query: $updateQuery);
-            $success = $preparedSql->execute();
+            error_log(message: $updateQuery);
+            
+            try {
+                header('Content-Type: application/json');
+                $success = $preparedSql->execute();
+                echo json_encode(['status' => true]);
+            } catch (\Exception $e) {
+                http_response_code(response_code: 500);
+                SqlErrorsCodeMessage::echoJsonErrorMessage(sqlErrorCode: $e->getCode());
+            }
 
-            header('Content-Type: application/json');
-            echo json_encode(['success' => $success]);
             return $success;
 
         } else {
              #   Caso valores inválidos, cancelar operação.
             http_response_code(response_code: 400);
+            echo json_encode(['status' => false]);
             return false;
         }
         # Retornar código de criação/atualização 200 OK e TOKEN com informações atualizadas.
@@ -77,14 +75,17 @@ class UserModel extends Model
     public function delete(array $deleteData): bool{
         $deleteQuery = "delete from usuario where usuario.email = '" . $deleteData["email"] . "'";
         error_log($deleteQuery);
-
         
         $con = Conexao::getInstance()::getConexao();
         $preparedSql = $con->prepare(query: $deleteQuery);
-        $success = $preparedSql->execute();
-
-        header('Content-Type: application/json');
-        echo json_encode(['success' => $success]);
+        try {
+            header('Content-Type: application/json');
+            $success = $preparedSql->execute();
+            echo json_encode(['status' => true]);
+        } catch (\Exception $e) {
+            http_response_code(response_code: 500);
+            SqlErrorsCodeMessage::echoJsonErrorMessage(sqlErrorCode: $e->getCode());
+        }
         return $success;
     }
 
@@ -101,5 +102,18 @@ class UserModel extends Model
             $counter += 1;
         }
         return $preparedSql;
+    }
+
+    public static function populateUpdateSql($putData): string
+    {
+        $updateQuery = "UPDATE usuario SET ";
+        foreach ($putData as $key => $attribute) {
+            if ($key != "email") {
+                $updateQuery .= "$key = '" . $attribute . "' ,";
+            }
+        }
+        $updateQuery = substr(string: $updateQuery, offset: 0, length: -1);
+        $updateQuery .= "WHERE usuario.email = '" . $putData["email"] . "'";
+        return $updateQuery;
     }
 }

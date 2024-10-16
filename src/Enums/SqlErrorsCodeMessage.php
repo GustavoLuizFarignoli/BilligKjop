@@ -8,16 +8,17 @@ class SqlErrorsCodeMessage {
     public const CHECK_VIOLATION = '23514';
     public const DEADLOCK = '40001';
     
-    public static function echoErrorMessage(string $sqlErrorCode): string {
+    public static function echoJsonErrorMessage(string $sqlErrorCode): string {
+        header('Content-Type: application/json');
         switch ($sqlErrorCode) {
             case self::DUPLICATE_ENTRY:
-                echo 'Email já cadastrado.';
+                echo json_encode(['status' => false, 'message' =>'Email já cadastrado.']);
                 break;
             case self::NOT_NULL_VIOLATION:
-                echo 'Valor necessário não preenchido ou enviado, por favor tente novamente.';
+                echo json_encode(['status' => false, 'message' =>'Valor necessário não preenchido ou enviado, por favor tente novamente.']);
                 break;
             default:
-                echo "[$sqlErrorCode] Erro desconhecido";
+                echo json_encode(['status' => false, 'message' =>'Erro desconhecido']);
                 break;
         }
         exit();
