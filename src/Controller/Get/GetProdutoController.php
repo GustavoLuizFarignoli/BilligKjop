@@ -21,51 +21,46 @@ class GetProdutoController extends Controller
 
         # Caso o usuário não insira um id na busca, será retonado uma lista com todos os dados que estão
         # no banco de dados referentes à produtos.
-        if (isset($_GET['id'])) {
-            $productModel = new ProdutoModel(id: (int) $_GET['id']);
-            $productData = $productModel->getByIdentifierFromDb();
+        $userSearchedForSpecificId = isset($_GET['id']);
 
-            if ($productData) return json_encode(
-                value: [
-                    "status" => 200,
-                    "headers" => [
-                        "Content-Type" => "application/json"
-                    ],
-                    "body" => [
-                        "message" => "Produto encontrado.",
-                        "data" => $productData
-                    ]
-                ]
-            );
-
-            return json_encode(
-                value: [
-                    "status" => 404,
-                    "headers" => [
-                        "Content-Type" => "application/json"
-                    ],
-                    "body" => [
-                        "message" => "Produto nao encontrado!",
-                        "data" => null
-                    ]
-                ]
-            );
+        if ($userSearchedForSpecificId) {
+            try {
+                self::getDataByProdutoId(productId: $_GET['id']);
+            } catch (\Exception $exception) {
+                error_log(message: "[ERRO]: " . $exception->getMessage());
+            }
+            exit();
+        } else {
+            try {
+                self::getAllProductData();
+            } catch (\Exception $exception) {
+                error_log(message: "[ERRO]: " . $exception->getMessage());
+            }
         }
+    }
 
+    public static function getAllProductData() {
         $produtoModel = new ProdutoModel(-1);
         $productData = $produtoModel->getAllFromDb();
 
-        return json_encode(
-            value: [
-                "status" => 200,
-                "headers" => [
-                    "Content-Type" => "application/json"
-                ],
-                "body" => [
-                    "message" => "Lista de produtos encontrados",
-                    "data" => $productData
-                ]
-            ]
-        );
+        http_response_code(response_code: 200);
+        $responseBodyJson = json_encode(value: [ "message" => "Lista de produtos encontrados", "data" => $productData ]);
+        return $responseBodyJson;
+    }
+
+    public static function getDataByProdutoId($productId) {
+        $productModel = new ProdutoModel(id: (int) $productId);
+        $productData = $productModel->getByIdentifierFromDb();
+
+        if ($productData) {
+            http_response_code(response_code: 200);
+            $responseBodyJson = json_encode(value: [ "message" => "Produto encontrado.", "data" => $productData ]);
+            return $responseBodyJson;
+        } else {
+            http_response_code(response_code: 404);
+            $responseBodyJson = json_encode(value: ["message" => "Produto nao encontrado!", "data" => null]);
+            return $responseBodyJson;
+        }
+
     }
 }

@@ -11,15 +11,31 @@ abstract class Model
 
     public function getByIdentifierFromDb()
     {
-        $con = Conexao::getInstance()::getConexao();
-        $query_result = $con->query($this->singleDataSql);
-        return $query_result->fetch(mode: \PDO::FETCH_ASSOC);
+        try {
+            $con = Conexao::getInstance()::getConexao();
+            $query_result = $con->query($this->singleDataSql);
+            return $query_result->fetch(mode: \PDO::FETCH_ASSOC);
+        } catch (\PDOException $pdoException) {
+            error_log(message: "Model não conseguiu criar a conexão: " . $pdoException->getMessage());
+        } catch (\Exception $exception) {
+            error_log(message: "Erro desconhecido: " . $exception->getMessage());
+        } finally {
+            throw new \Exception(message: "O modelo não conseguiu criar a conexão!");
+        }
     }
 
     public function getAllFromDb(): array
     {
-        $con = Conexao::getInstance()::getConexao();
-        $query_result = $con->query($this->allDataSql);
-        return $query_result->fetchAll(mode: \PDO::FETCH_ASSOC);
+        try {
+            $con = Conexao::getInstance()::getConexao();
+            $query_result = $con->query($this->allDataSql);
+            return $query_result->fetchAll(mode: \PDO::FETCH_ASSOC);
+        } catch (\PDOException $pdoException) {
+            error_log(message: "Model não conseguiu criar a conexão: " . $pdoException->getMessage());
+        } catch (\Exception $exception) {
+            error_log(message: "Erro desconhecido: " . $exception->getMessage());
+        } finally {
+            throw new \Exception(message: "O modelo não conseguiu criar a conexão!");
+        }
     }
 }

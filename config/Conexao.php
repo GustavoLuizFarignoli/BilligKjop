@@ -52,11 +52,13 @@ class Conexao
         try {
             self::$conexao = new \PDO(dsn: "mysql:host=$dbip;dbname=$dbname", username: $user, password: $pass);
             return true;
-        } catch (\PDOException $e) {
-            error_log(message: "Erro ao criar conexão com banco de dados: " . $e->getMessage());
-            return false;
+        } catch (\PDOException $pdoException) {
+            $errorMessage = "Erro ao criar conexão com banco de dados: " . $pdoException->getMessage();
+            error_log(message: $errorMessage);
         } catch (Exception $exception) {
-            error_log(message: "Erro desconhecido: " . $exception->getMessage());
+            $errorMessage = "Erro desconhecido: " . $exception->getMessage();
+            error_log(message: $errorMessage);
+        } finally {
             return false;
         }
     }
